@@ -104,6 +104,87 @@ namespace CheckoutKata.Tests.Checkout
             result.Should().Be(expectedBasketItemValue);
         }
 
+        [Fact]
+        public void Given_CheckService_AddItemToBasket_When_Invoked_ShouldAddItemToBasket()
+        {
+            //Arrange
+            var item = new Item
+            {
+                SKU = ItemSkus.ItemASku
+            };
+            //Act
+
+            _sut.AddItemToBasket(item);
+
+            //Assert
+            const int expectedBasketItemCount = 1;
+            _sut.BasketItems.Count.Should().Be(expectedBasketItemCount);
+        }
+
+        [Fact]
+        public void Given_CheckService_AddItemToBasket_When_MultipleItemsAreAdded_ShouldReturnExpectedItemCount()
+        {
+            //Arrange
+            var item1 = new Item
+            {
+                SKU = ItemSkus.ItemASku,
+                Quantity = 2
+            };
+
+            var item2 = new Item
+            {
+                SKU = ItemSkus.ItemBSku
+            };
+
+            //Act
+            _sut.AddItemToBasket(item1);
+            _sut.AddItemToBasket(item2);
+
+            //Assert
+            const int expectedBasketItemCount = 2;
+            _sut.BasketItems.Count.Should().Be(expectedBasketItemCount);
+        }
+
+        [Fact]
+        public void Given_CheckoutService_CalculateBasketTotal_When_Invoked_Then_ShouldReturnTheExpectedCost()
+        {
+            //Given
+            var item = new Item
+            {
+                Price = ItemPrices.ItemAPrice,
+                SKU = ItemSkus.ItemASku
+            };
+
+            _sut.AddItemToBasket(item);
+
+            //When
+            var result = _sut.CalculateBasketTotal();
+
+            //Then
+            const decimal expectedBasketValue = 10m;
+            result.Should().Be(expectedBasketValue);
+        }
+
+        [Fact]
+        public void Given_CheckoutService_CalculateBasketTotal_When_MultipleItemsAreAddedToTheBasket_Then_ShouldReturnCostOfMultipleItems()
+        {
+            //Given
+            var item = new Item
+            {
+                Price = ItemPrices.ItemAPrice,
+                SKU = ItemSkus.ItemASku,
+                Quantity = 2
+            };
+
+            _sut.AddItemToBasket(item);
+
+            //When
+            var result = _sut.CalculateBasketTotal();
+
+            //Then
+            const decimal expectedBasketValue = 20m; //item price (10) * quantity (2)
+            result.Should().Be(expectedBasketValue);
+        }
 
     }
 }
