@@ -34,5 +34,23 @@ namespace CheckoutKata.Promotions
             }
         }
 
+        public void ApplyPromotions(List<Item> basketItems, ref decimal basketTotalPrice)
+        {
+            foreach (var basketItem in basketItems)
+            {
+                if (basketItem.SKU == ItemSkus.ItemBSku)
+                {
+                    var itemBPromotion = new ItemBPromotion();
+                    itemBPromotion.ApplyPromotion(basketItem, ref basketTotalPrice);
+                }
+
+                if (basketItem.SKU != ItemSkus.ItemDSku) continue;
+                {
+                    var itemDPromotion = new ItemDPromotion();
+                    itemDPromotion.ApplyPromotion(basketItem, ref basketTotalPrice);
+                }
+            }
+        }
+
     }
 }

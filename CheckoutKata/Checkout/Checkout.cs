@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CheckoutKata.ShoppingItem.Item;
+using CheckoutKata.Promotions;
 
 namespace CheckoutKata.Checkout
 {
@@ -16,6 +17,9 @@ namespace CheckoutKata.Checkout
         public decimal CalculateBasketTotal()
         {
             var basketTotalPrice = BasketItems.Sum(basketItem => basketItem.Price * basketItem.Quantity);
+
+            var promotions = new Promotion();
+            promotions.ApplyPromotions(BasketItems, ref basketTotalPrice);
 
             return basketTotalPrice;
         }
