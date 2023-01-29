@@ -13,6 +13,11 @@ namespace CheckoutKata.Checkout
             BasketItems.Add(item);
         }
 
+        public decimal CalculateBasketTotal()
+        {
+            var basketTotalPrice = BasketItems.Sum(basketItem => basketItem.Price * basketItem.Quantity);
 
+            return basketTotalPrice;
+        }
     }
 }

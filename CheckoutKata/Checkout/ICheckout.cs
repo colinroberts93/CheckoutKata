@@ -7,5 +7,6 @@ namespace CheckoutKata.Checkout
     {
         public List<Item> BasketItems { get; }
         public void AddItemToBasket(Item item);
+        decimal CalculateBasketTotal();
     }
 }
