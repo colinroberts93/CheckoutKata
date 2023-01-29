@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Checkout\" />
     <Folder Include="Promotions\" />
   </ItemGroup>
 
